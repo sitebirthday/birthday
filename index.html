@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С Днём Рождения! 🎂</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #FFF8F0;
+            --soft-pink: #FFE5E5;
+            --rose: #FFB5B5;
+            --warm-beige: #F5E6D3;
+            --soft-brown: #D4A574;
+            --gold: #C9A96E;
+            --text-dark: #5C4033;
+            --text-light: #8B7355;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--soft-pink) 50%, var(--warm-beige) 100%);
+            background-attachment: fixed;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            position: relative;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><line x1="10" y1="10" x2="30" y2="30" stroke="%23FFB5B5" stroke-width="3" stroke-linecap="round"/><g transform="translate(10,10) rotate(-45)"><path d="M0 -4 L1.2 -1 L4.5 -1 L2 1 L3 4 L0 2 L-3 4 L-2 1 L-4.5 -1 L-1.2 -1 Z" fill="%23FFD700" stroke="%23C9A96E" stroke-width="3.5"/><circle cx="0" cy="-1.5" r="0.8" fill="%23FFF"/></g></svg>'), auto;
+        }
+
+        a, button, .photo-frame {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><line x1="10" y1="10" x2="30" y2="30" stroke="%23FFB5B5" stroke-width="3" stroke-linecap="round"/><g transform="translate(10,10) rotate(-45)"><path d="M0 -4 L1.2 -1 L4.5 -1 L2 1 L3 4 L0 2 L-3 4 L-2 1 L-4.5 -1 L-1.2 -1 Z" fill="%23FFD700" stroke="%23C9A96E" stroke-width="0.5"/><circle cx="0" cy="-1.5" r="0.8" fill="%23FFF"/></g></svg>'), pointer;
+        }
+
+        /* Magic wand trail stars */
+        .cursor-star {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: starFade 1s ease-out forwards;
+        }
+
+        @keyframes starFade {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0.2) rotate(360deg);
+            }
+        }
+        .teddy-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.15));
+            transition: transform 0.3s ease;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            animation: float-up 15s infinite ease-in-out;
+            opacity: 0.3;
+        }
+
+        .particle:nth-child(1) { left: 10%; width: 8px; height: 8px; background: var(--rose); animation-delay: 0s; animation-duration: 12s; }
+        .particle:nth-child(2) { left: 20%; width: 12px; height: 12px; background: var(--soft-brown); animation-delay: 2s; animation-duration: 15s; }
+        .particle:nth-child(3) { left: 35%; width: 6px; height: 6px; background: var(--gold); animation-delay: 4s; animation-duration: 10s; }
+        .particle:nth-child(4) { left: 50%; width: 10px; height: 10px; background: var(--rose); animation-delay: 1s; animation-duration: 13s; }
+        .particle:nth-child(5) { left: 65%; width: 8px; height: 8px; background: var(--soft-brown); animation-delay: 3s; animation-duration: 11s; }
+        .particle:nth-child(6) { left: 80%; width: 14px; height: 14px; background: var(--gold); animation-delay: 5s; animation-duration: 14s; }
+        .particle:nth-child(7) { left: 90%; width: 7px; height: 7px; background: var(--rose); animation-delay: 2.5s; animation-duration: 16s; }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header with elegant animation */
+        .header {
+            text-align: center;
+            padding: 4rem 2rem 0rem;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .decorative-line {
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .decorative-line::before,
+        .decorative-line::after {
+            content: '✦';
+            position: absolute;
+            top: -8px;
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
+
+        .decorative-line::before { left: -20px; }
+        .decorative-line::after { right: -20px; }
+
+        /* Hero section with teddy */
+        .hero {
+            text-align: center;
+            margin: 3rem 0;
+            animation: scaleIn 1s ease-out 0.5s both;
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .teddy-container {
+            width: 450px;
+            height: 450px;
+            margin: 0 auto 0rem;
+            position: relative;
+            animation: gentleFloat 6s ease-in-out infinite;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><line x1="10" y1="10" x2="30" y2="30" stroke="%23FFB5B5" stroke-width="3" stroke-linecap="round"/><g transform="translate(10,10) rotate(-45)"><path d="M0 -4 L1.2 -1 L4.5 -1 L2 1 L3 4 L0 2 L-3 4 L-2 1 L-4.5 -1 L-1.2 -1 Z" fill="%23FFD700" stroke="%23C9A96E" stroke-width="0.5"/><circle cx="0" cy="-1.5" r="0.8" fill="%23FFF"/></g></svg>'), pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .teddy-container:hover {
+            animation: party 0.8s ease-in-out infinite;
+        }
+
+        @keyframes party {
+            0%, 100% { transform: rotate(-5deg) scale(1.1); }
+            25% { transform: rotate(-8deg) scale(1.12); }
+            50% { transform: rotate(5deg) scale(1.1); }
+            75% { transform: rotate(8deg) scale(1.12); }
+        }
+
+
+        .teddy-container:hover .teddy-arm-left-lower {
+            animation: armWaveLeftFast 0.5s ease-in-out infinite;
+        }
+
+        .teddy-container:hover .teddy-arm-right-lower {
+            animation: armWaveRightFast 0.5s ease-in-out infinite;
+        }
+
+        @keyframes armWaveLeft {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-15deg); }
+        }
+
+        @keyframes armWaveRight {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(15deg); }
+        }
+
+        @keyframes armWaveLeftFast {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-30deg); }
+            50% { transform: rotate(10deg); }
+            75% { transform: rotate(-25deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes armWaveRightFast {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(30deg); }
+            50% { transform: rotate(-10deg); }
+            75% { transform: rotate(25deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+
+        @keyframes legBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(2px); }
+        }
+
+        /* Confetti particles for teddy hover */
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        @keyframes confettiBurst {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y)) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+
+        /* Years timeline */
+        .timeline {
+            margin: 4rem 0;
+        }
+
+        .year-block {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideUp 1s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .year-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--rose), var(--gold), var(--soft-brown));
+        }
+
+        .year-block:nth-child(1) { animation-delay: 0.8s; }
+        .year-block:nth-child(2) { animation-delay: 1s; }
+        .year-block:nth-child(3) { animation-delay: 1.2s; }
+
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .year-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--text-dark);
+            font-feature-settings: "lnum";
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .year-ornament {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .ornament-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: pulse 2s infinite;
+        }
+
+        .ornament-dot:nth-child(2) { animation-delay: 0.3s; }
+        .ornament-dot:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.5); opacity: 1; }
+        }
+
+        .ornament-star {
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        /* Photo grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .photo-frame {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .photo-frame:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .photo-frame:hover {
+            transform: rotate(0deg) translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, var(--warm-beige), var(--soft-pink));
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 3s infinite;
+        }
+        .photo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* главное */
+            display: block;
+        }
+
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .photo-caption {
+            margin-top: 1rem;
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .year-text {
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            border-left: 4px solid var(--gold);
+        }
+
+        /* Timer section */
+        .timer-section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            margin: 4rem 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            text-align: center;
+            animation: slideUp 1s ease-out 1.5s both;
+        }
+
+        .timer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .time-box {
+            background: linear-gradient(135deg, white, var(--warm-beige));
+            padding: 2rem;
+            border-radius: 20px;
+            min-width: 100px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .time-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .time-number {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            display: block;
+            line-height: 1;
+        }
+
+        .time-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        /* Decorative SVG elements */
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            pointer-events: none;
+            animation: gentleFloat 8s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) { top: 10%; left: 5%; width: 80px; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 30%; right: 8%; width: 100px; animation-delay: 2s; }
+        .floating-element:nth-child(3) { bottom: 20%; left: 10%; width: 60px; animation-delay: 4s; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            font-style: italic;
+            color: var(--text-light);
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown {
+                gap: 1rem;
+            }
+
+            .time-box {
+                padding: 1.5rem;
+                min-width: 80px;
+            }
+        }
+
+        /* Scroll reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pretty-link {
+            font-size: 3rem;
+            text-decoration: none;
+            margin-left: 8px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--soft-pink), var(--warm-beige));
+            color: #6b4f4f;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+        .gallery-link{
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .pretty-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .pretty-link:hover .arrow {
+            transform: translateX(4px);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Animated particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="main-title">С Днём Рождения Диана!</h1>
+            <p class="subtitle">Пусть каждый день будет волшебным</p>
+            <div class="decorative-line"></div>
+        </header>
+
+        <!-- Hero with teddy bear -->
+        <section class="hero">
+            <div class="teddy-container">
+                <img src="img/teddy.png" alt="Мишка" class="teddy-img">
+            </div>
+        </section>
+
+        <!-- Years timeline -->
+        <div class="timeline">
+            <!-- Year 1 -->
+            <div class="year-block reveal">
+                <h2 class="year-title">
+                    <span class="year-number">1</span>
+                    <span>Годик</span>
+                </h2>
+                <div class="year-ornament">
+                    <div class="ornament-dot"></div>
+                    <div class="ornament-dot"></div>
+                    <span class="ornament-star">✦</span>
+                    <div class="ornament-dot"></div>
+                    <div class="ornament-dot"></div>
+                </div>
+                
+                <div class="photo-grid">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder">
+                            <img src="img/photo1.jpg" alt="Фото 1">
+                        </div>
+                        <p class="photo-caption">Первые шаги...</p>
+                    </div>
+                    <div class="photo-frame">
+                        <div class="photo-placeholder">
+                            <img src="img/photo2.webp" alt="Фото 2">
+                        </div>
+                        <p class="photo-caption">Незабываемый момент...</p>
+                    </div>
+                </div>
+                <div class="gallery-link">
+                    <p class="subtitle">
+                        <a href="https://sappy-maria.wfolio.pro/disk/08-02-2026-den-rozhdeniya-dxzm57" target="_blank" class="pretty-link">
+                            Смотреть альбом
+                            
+                        </a>
+                    </p>
+                </div>
+
+                
+                <div class="year-text">
+                    Первый год жизни - время открытий, первых улыбок и бесконечной радости! 💕
+                </div>
+            </div>
+        </div>
+
+        <!-- Timer to next birthday - moved to end -->
+        <section class="timer-section">
+            <h2 class="timer-title">До следующего дня рождения</h2>
+            <div class="countdown" id="countdown">
+                <div class="time-box">
+                    <span class="time-number" id="days">000</span>
+                    <span class="time-label">Дней</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-number" id="hours">00</span>
+                    <span class="time-label">Часов</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-number" id="minutes">00</span>
+                    <span class="time-label">Минут</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-number" id="seconds">00</span>
+                    <span class="time-label">Секунд</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Сделано с любовью 💖</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;"><a href="https://itsrkey.ru" target="_blank" style="color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold);">itsrkey.ru</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Countdown timer
+        const birthday = new Date('2025-02-05'); // Дата рождения: 5 февраля 2025
+        
+        function updateCountdown() {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth();
+            const currentDay = now.getDate();
+            
+            // Calculate next birthday
+            let nextBirthday = new Date(currentYear, birthday.getMonth(), birthday.getDate());
+            
+            if (now > nextBirthday) {
+                nextBirthday = new Date(currentYear + 1, birthday.getMonth(), birthday.getDate());
+            }
+            
+            const diff = nextBirthday - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = String(days).padStart(3, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Magic wand cursor trail
+        let lastX = 0;
+        let lastY = 0;
+        let throttle = false;
+
+        document.addEventListener('mousemove', (e) => {
+            if (throttle) return;
+            throttle = true;
+            
+            setTimeout(() => {
+                throttle = false;
+            }, 50);
+
+            const star = document.createElement('div');
+            star.className = 'cursor-star';
+            star.style.left = e.pageX + 'px';
+            star.style.top = e.pageY + 'px';
+            
+            const colors = ['#FFD700', '#FFB5B5', '#C9A96E', '#FFE5E5'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            const tx = (Math.random() - 0.5) * 30;
+            const ty = (Math.random() - 0.5) * 30;
+            
+            star.style.cssText = `
+                left: ${e.pageX}px;
+                top: ${e.pageY}px;
+                width: 4px;
+                height: 4px;
+                background: ${color};
+                border-radius: 50%;
+                --tx: ${tx}px;
+                --ty: ${ty}px;
+            `;
+            
+            document.body.appendChild(star);
+            
+            setTimeout(() => {
+                star.remove();
+            }, 1000);
+        });
+
+        // Teddy bear continuous confetti effect on hover
+        const teddyContainer = document.querySelector('.teddy-container');
+        let confettiInterval = null;
+        
+        teddyContainer.addEventListener('mouseenter', () => {
+            // Start continuous confetti
+            confettiInterval = setInterval(createConfetti, 300); // New burst every 300ms
+        });
+
+        teddyContainer.addEventListener('mouseleave', () => {
+            // Stop confetti when mouse leaves
+            if (confettiInterval) {
+                clearInterval(confettiInterval);
+                confettiInterval = null;
+            }
+        });
+
+        function createConfetti() {
+            const colors = ['#FFB5B5', '#FFD700', '#C9A96E', '#FFE5E5', '#D4A574', '#F5E6D3'];
+            const rect = teddyContainer.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const particleCount = 15; // More particles per burst
+            
+            for (let i = 0; i < particleCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    
+                    const angle = (Math.PI * 2 * i) / particleCount;
+                    const velocity = 60 + Math.random() * 40;
+                    const x = Math.cos(angle) * velocity;
+                    const y = Math.sin(angle) * velocity;
+                    
+                    const size = 4 + Math.random() * 4; // Varied sizes
+                    
+                    confetti.style.cssText = `
+                        position: fixed;
+                        left: ${centerX}px;
+                        top: ${centerY}px;
+                        width: ${size}px;
+                        height: ${size}px;
+                        background: ${colors[Math.floor(Math.random() * colors.length)]};
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 1000;
+                        --x: ${x}px;
+                        --y: ${y}px;
+                        animation: confettiBurst 1.2s ease-out forwards;
+                    `;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 1200);
+                }, i * 10);
+            }
+        }
+
+        // Scroll reveal animation
+        const reveals = document.querySelectorAll('.reveal');
+        
+        function checkReveal() {
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkReveal);
+        checkReveal(); // Initial check
+    </script>
+</body>
+</html>
